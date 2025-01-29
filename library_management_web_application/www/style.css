@@ -1,0 +1,212 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 10px;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 15px;
+}
+
+.header h1 {
+    color: #4CAF50;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #4CAF50;
+}
+
+.profile p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.profile span {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Tabs */
+.tabs {
+    gap: 10px;
+    display: flex;
+    margin-top: 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+.tabs button {
+    color: black;
+    flex: 1;
+    padding: 10px 0;
+    font-size: 1rem;
+    background: #f4f7f9;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tabs button.active,
+.tabs button:hover {
+    background: #4CAF50;
+    color: white;
+    border-bottom: 3px solid #4CAF50;
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.search-bar button {
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-bar button:hover {
+    background: #45a049;
+}
+
+/* Section Styles */
+.section {
+    margin: 30px 0;
+}
+
+.section h2 {
+    font-size: 1.5rem;
+    color: #4CAF50;
+    margin-bottom: 15px;
+}
+
+
+.table-container {
+    max-height: 300px;  /* Adjust height as necessary */
+    overflow-y: auto;
+}
+
+/* Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+   }
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.table th {
+    background: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background: #f4f4f9;
+}
+
+.table tbody tr:hover {
+    background: #e9f5e9;
+    transition: 0.3s;
+}
+
+/* Buttons */
+button {
+    padding: 8px 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+button.editBtn {
+    background: #2196F3;
+}
+
+button.editBtn:hover {
+    background: #1E88E5;
+}
+
+button.deleteBtn {
+    background: #f44336;
+}
+
+button.deleteBtn:hover {
+    background: #e53935;
+}
+
+/* Add Book/Member/Issue Buttons */
+a button {
+    text-decoration: none;
+    display: inline-block;
+}
+
+#addBooksBtn, #addMemberBtn, #addIssueBtn {
+    margin-top: 15px;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+/* Return Book Button */
+button.returnBtn {
+    background: #FFA500;
+}
+
+button.returnBtn:hover {
+    background: #FF8C00;
+}

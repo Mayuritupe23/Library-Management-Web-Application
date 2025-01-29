@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8fc;
+    color: #333;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #4a4a68;
+}
+
+.header .profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    background-color: #f2f2fa;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #4a4a68;
+}
+
+.tabs button.active {
+    background-color: #6856d6;
+    color: white;
+}
+
+
+#importBooksBtn{
+    margin-left: 800px;
+    margin-top: -40px;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -500px;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 300px; /* Adjust width as needed */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    background-color: #fff;
+}
+
+.search-container i {
+    position: absolute;
+    /* left: 10px;  */
+    margin-left: 270px;
+    font-size: 16px;
+    color: #888; /* Icon color */
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px 8px 8px 30px; /* Add left padding for the icon */
+    border: none;
+    outline: none;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-left: -30px;
+}
+
+
+
+ 
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f2f2fa;
+    color: #4a4a68;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.status.issued {
+    background-color: #e1f5e2;
+    color: #2e7d32;
+}
+
+.status.returned {
+    background-color: #ffe2e2;
+    color: #d32f2f;
+}
+
+.action {
+    cursor: pointer;
+    color: #6856d6;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section h2 {
+    font-size: 22px;
+    color: #4a4a68;
+    margin-bottom: 15px;
+}
+.section h2{
+    color:#4a4a68 ;
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Library Management</h1>
+            <div class="profile">
+                <img src="mayuri.jpg" alt="User Profile">
+                <div>
+                    <p>Mayuri Tupe</p>
+                    <span>Librarian</span>
+                </div>
+            </div>
+        </div>
+
+        {% if members or books %}
+        <div class="tabs">
+            <button class="active">All</button>
+            <button>Books</button>
+            <button>Members</button>
+            <button>Transactions</button>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for book name, member name, etc.">
+            <button onclick="searchItems()" id="search-btn">Search</button>
+            <button id="importBooksBtn">Import Books</button>
+        </div>
+        {% endif %}
+
+        <!-- Book List Section -->
+        {% if books %}
+        <div class="section" id="bookList">
+            <h2>Book List</h2>
+            <div class="table-container">
+                <table class="table" id="bookTable">
+                    <thead>
+                        <tr>
+                            <th>Book Title</th>
+                            <th>Book ID</th>
+                            <th>Author</th>
+                            <th>ISBN Number</th>
+                            <th>Publisher</th>
+                            <th>Stock Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for j in books %}
+                        <tr>
+                            <td>{{ j.title }}</td>
+                            <td>{{ j.book_id }}</td>
+                            <td>{{ j.author }}</td>
+                            <td>{{ j.isbn }}</td>
+                            <td>{{ j.publisher }}</td>
+                            <td>{{ j.stock_quantity }}</td>
+                            <td class="action">
+                                <button class="editBtn">Edit</button>
+                                <button class="deleteBtn">Delete</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <a href="http://library.localhost:8001/books-/new"><button id="addBooksBtn">Add Books</button></a>
+        </div>
+        {% endif %}
+
+        <!-- Member List Section -->
+        {% if members %}
+        <div class="section" id="memberList">
+            <h2>Member List</h2>
+            <div class="table-container">
+                <table class="table" id="memberTable">
+                    <thead>
+                        <tr>
+                            <th>Member Name</th>
+                            <th>Member ID</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Outstanding Debt</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in members %}
+                        <tr>
+                            <td>{{ i.full_name }}</td>
+                            <td>{{ i.member_id }}</td>
+                            <td>{{ i.email }}</td>
+                            <td>{{ i.phone_number }}</td>
+                            <td>{{ i.outstanding_debt }}</td>
+                            <td class="action">
+                                <button class="editBtn">Edit</button>
+                                <button class="deleteBtn">Delete</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <a href="http://library.localhost:8001/library-members/new"><button id="addMemberBtn">Add Member</button></a>
+        </div>
+        {% endif %}
+
+        <!-- Issued Books Section -->
+        <div class="section" id="issuedBooks">
+            <h2>Issued Books</h2>
+            <div class="table-container">
+                <table class="table" id="issueTable">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Book Title</th>
+                            <th>Book ID</th>
+                            <th>Member Name</th>
+                            <th>Member ID</th>
+                            <th>Issued Date</th>
+                            <th>Due Date</th>
+                            <th>Rent Fee</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for k in issued_books %}
+                        <tr>
+                            <td>{{ k.name }}</td>
+                            <td>{{ k.title }}</td>
+                            <td>{{ k.book_id }}</td>
+                            <td>{{ k.full_name }}</td>
+                            <td>{{ k.member_id }}</td>
+                            <td>{{ k.issue_date }}</td>
+                            <td>{{ k.due_date }}</td>
+                            <td>{{ k.rent_fee }}</td>
+                            <td class="action">
+                                <button class="btn-return" onclick="">Mark As Returned</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <a href="http://library.localhost:8001/issue-book/new"><button id="addIssueBtn">Issue Book</button></a>
+        </div>
+
+        <!-- Return Books Section -->
+        {% if return_books %}
+        <div class="section" id="returnBooks">
+            <h2>Return Books</h2>
+            <div class="table-container">
+                <table class="table" id="returnTable">
+                    <thead>
+                        <tr>
+                            <th>Book</th>
+                            <th>Book ID</th>
+                            <th>Member Name</th>
+                            <th>Member ID</th>
+                            <th>Issued Date</th>
+                            <th>Due Date</th>
+                            <th>Return Date</th>
+                            <th>Fine</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for k in return_books %}
+                        <tr>
+                            <td>{{ k.title }}</td>
+                            <td>{{ k.book_id }}</td>
+                            <td>{{ k.full_name }}</td>
+                            <td>{{ k.member_id }}</td>
+                            <td>{{ k.issue_date }}</td>
+                            <td>{{ k.due_date }}</td>
+                            <td>{{ k.return_date }}</td>
+                            <td>{{ k.fine }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="website.js"></script>
+</body>
+</html>

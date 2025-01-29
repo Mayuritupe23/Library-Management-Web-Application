@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{###}",
+ "creation": "2025-01-23 00:22:43.570770",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "member",
+  "book",
+  "issue_date",
+  "due_date",
+  "rent_fee",
+  "column_break_hhfs",
+  "member_id",
+  "book_id",
+  "return_date",
+  "status",
+  "fine"
+ ],
+ "fields": [
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Member",
+   "options": "Members",
+   "reqd": 1
+  },
+  {
+   "fieldname": "book",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Book",
+   "options": "Books",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.status ==\"Issued\"",
+   "fieldname": "issue_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Issue Date"
+  },
+  {
+   "depends_on": "eval:doc.status==\"Issued\"",
+   "fieldname": "rent_fee",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Rent Fee",
+   "options": "Issued\nReturned",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_hhfs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "member.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Member ID",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "book.book_id",
+   "fieldname": "book_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Book ID"
+  },
+  {
+   "depends_on": "eval:doc.status == \"Returned\"",
+   "fieldname": "return_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Return Date",
+   "read_only": 1
+  },
+  {
+   "default": "Issued",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Issued\nReturned",
+   "reqd": 1
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Due Date"
+  },
+  {
+   "depends_on": "eval:doc.status==\"Returned\"",
+   "fieldname": "fine",
+   "fieldtype": "Currency",
+   "label": "Fine",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-25 09:19:24.447514",
+ "modified_by": "Administrator",
+ "module": "Library Management Web Application",
+ "name": "Transactions",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
