@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        {% if members or books %}
+        
         <div class="tabs">
             <button class="active">All</button>
             <button>Books</button>
@@ -32,34 +32,34 @@
             <button onclick="searchItems()" id="search-btn">Search</button>
             <button id="importBooksBtn">Import Books</button>
         </div>
-        {% endif %}
+        
 
         <!-- Book List Section -->
-        {% if books %}
+        
         <div class="section" id="bookList">
             <h2>Book List</h2>
             <div class="table-container">
                 <table class="table" id="bookTable">
                     <thead>
                         <tr>
-                            <th>Book Title</th>
-                            <th>Book ID</th>
-                            <th>Author</th>
-                            <th>ISBN Number</th>
-                            <th>Publisher</th>
-                            <th>Stock Quantity</th>
+                            <th name="title">Book Title</th>
+                            <th name="book_id">Book ID</th>
+                            <th name="author">Author</th>
+                            <th name="isbn">ISBN Number</th>
+                            <th name="publisher">Publisher</th>
+                            <th name="stock_quantity">Stock Quantity</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for j in books %}
                         <tr>
-                            <td>{{ j.title }}</td>
-                            <td>{{ j.book_id }}</td>
-                            <td>{{ j.author }}</td>
-                            <td>{{ j.isbn }}</td>
-                            <td>{{ j.publisher }}</td>
-                            <td>{{ j.stock_quantity }}</td>
+                            <td name="title">{{ j.title }}</td>
+                            <td name="book_id">{{ j.book_id }}</td>
+                            <td name="author">{{ j.author }}</td>
+                            <td name="isbn">{{ j.isbn }}</td>
+                            <td name="publisher">{{ j.publisher }}</td>
+                            <td name="stock_quantity">{{ j.stock_quantity }}</td>
                             <td class="action">
                                 <button class="editBtn">Edit</button>
                                 <button class="deleteBtn">Delete</button>
@@ -71,32 +71,32 @@
             </div>
             <a href="http://library.localhost:8001/books-/new"><button id="addBooksBtn">Add Books</button></a>
         </div>
-        {% endif %}
+        
 
         <!-- Member List Section -->
-        {% if members %}
+        
         <div class="section" id="memberList">
             <h2>Member List</h2>
             <div class="table-container">
                 <table class="table" id="memberTable">
                     <thead>
                         <tr>
-                            <th>Member Name</th>
-                            <th>Member ID</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Outstanding Debt</th>
+                            <th name="member_id">Member ID</th>
+                            <th name="full_name">Member Name</th>
+                            <th name="email">Email</th>
+                            <th name="phone_number">Phone</th>
+                            <th name="outstanding_debt">Outstanding Debt</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for i in members %}
                         <tr>
-                            <td>{{ i.full_name }}</td>
-                            <td>{{ i.member_id }}</td>
-                            <td>{{ i.email }}</td>
-                            <td>{{ i.phone_number }}</td>
-                            <td>{{ i.outstanding_debt }}</td>
+                            <td name="member_id">{{ i.member_id }}</td>
+                            <td name="full_name">{{ i.full_name }}</td>
+                            <td name="email">{{ i.email }}</td>
+                            <td name="phone_number">{{ i.phone_number }}</td>
+                            <td name="outstanding_debt">{{ i.outstanding_debt }}</td>
                             <td class="action">
                                 <button class="editBtn">Edit</button>
                                 <button class="deleteBtn">Delete</button>
@@ -108,7 +108,7 @@
             </div>
             <a href="http://library.localhost:8001/library-members/new"><button id="addMemberBtn">Add Member</button></a>
         </div>
-        {% endif %}
+        
 
         <!-- Issued Books Section -->
         <div class="section" id="issuedBooks">
@@ -151,7 +151,7 @@
         </div>
 
         <!-- Return Books Section -->
-        {% if return_books %}
+        
         <div class="section" id="returnBooks">
             <h2>Return Books</h2>
             <div class="table-container">
@@ -185,7 +185,7 @@
                 </table>
             </div>
         </div>
-        {% endif %}
+        
     </div>
 
     <script src="website.js"></script>

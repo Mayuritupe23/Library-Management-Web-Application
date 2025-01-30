@@ -5,14 +5,11 @@ import frappe
 # @frappe.whitelist(allow_guest=True)
 
 def get_context(context):
-    # Fetching all members from the Member DocType
     context.members = frappe.get_all(
         'Members', 
         fields=['full_name','member_id', 'email','outstanding_debt' , 'phone_number']
     )
 
-# def get_context(context):
-    # Fetching all members from the Member DocType
     context.books = frappe.get_all(
         'Books', 
         fields=['title','book_id','name','isbn','stock_quantity', 'author', 'publisher']

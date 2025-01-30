@@ -31,7 +31,7 @@ class Transactions(Document):
         self.stock_quantity = book.stock_quantity
 
 
-class Transactions(Document):
+
     def before_save(self):
         # Handle when a book is issued
         if self.status == "Issued" and self.issue_date and self.due_date:

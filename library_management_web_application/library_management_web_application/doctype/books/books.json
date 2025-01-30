@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{book_id}",
+ "autoname": "format:{title}",
  "creation": "2025-01-17 11:30:50.413048",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -9,12 +9,11 @@
   "title",
   "author",
   "isbn",
-  "status",
+  "stock_quantity",
   "column_break_vdxd",
   "book_id",
   "publisher",
-  "number_of_page",
-  "stock_quantity"
+  "number_of_pages"
  ],
  "fields": [
   {
@@ -43,11 +42,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "number_of_page",
-   "fieldtype": "Int",
-   "label": "Number Of Page"
-  },
-  {
    "fieldname": "book_id",
    "fieldtype": "Data",
    "label": "Book ID",
@@ -63,15 +57,14 @@
    "label": "Stock Quantity"
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Available\nNot Available"
+   "fieldname": "number_of_pages",
+   "fieldtype": "Int",
+   "label": "Number Of Pages"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-28 12:39:55.689495",
+ "modified": "2025-01-30 12:21:02.684606",
  "modified_by": "Administrator",
  "module": "Library Management Web Application",
  "name": "Books",
@@ -91,9 +84,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": [],
- "title_field": "title"
+ "states": []
 }
