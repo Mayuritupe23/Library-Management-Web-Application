@@ -1,8 +1,7 @@
 
 
-import requests
+# import requests
 import frappe
-# @frappe.whitelist(allow_guest=True)
 
 def get_context(context):
     context.members = frappe.get_all(

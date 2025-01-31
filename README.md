@@ -13,6 +13,7 @@
 ## Introduction
 The Library Management Web Application is designed to streamline library operations. It helps the librarian manage book inventory, member information, and track book transactions such as issuing and returning books. The system calculates rent fees for issued books and handles fines for overdue books. The app includes functionality for importing book data via an API, allowing the librarian to add new books in bulk. The application is built using the Frappe Framework and provides a custom UI for handling CRUD operations and book management.
 
+
 ## Features
 - **Book Management**: Perform CRUD operations on books, including adding new books, updating book details, and deleting books.
 - **Member Management**: Add and manage library members, including tracking their outstanding debt.
