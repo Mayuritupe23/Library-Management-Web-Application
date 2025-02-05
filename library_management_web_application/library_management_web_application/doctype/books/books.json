@@ -26,6 +26,7 @@
   {
    "fieldname": "author",
    "fieldtype": "Data",
+   "in_standard_filter": 1,
    "label": "Author",
    "reqd": 1
   },
@@ -64,7 +65,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 12:21:02.684606",
+ "modified": "2025-02-05 12:46:37.373094",
  "modified_by": "Administrator",
  "module": "Library Management Web Application",
  "name": "Books",

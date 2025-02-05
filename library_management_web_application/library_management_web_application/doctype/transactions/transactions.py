@@ -23,7 +23,7 @@ class Transactions(Document):
             book.stock_quantity += 1
             book.save()
 
-        self.stock_quantity = book.stock_quantity
+        # self.stock_quantity = book.stock_quantity
 
 
 

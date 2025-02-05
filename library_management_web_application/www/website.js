@@ -1,9 +1,7 @@
 // Function to handle editing a row
 function handleEditRow(button) {
-    // console.log(button)
     const row = button.closest('tr');
     Array.from(row.cells).forEach((cell, index) => {
-        console.log(index)
         if (index < row.cells.length - 1) {
             const originalText = cell.textContent;
             cell.innerHTML = `<input type="text" name="field${index}" value="${originalText}" />`;
@@ -14,77 +12,61 @@ function handleEditRow(button) {
         <button class="cancelBtn">Cancel</button>
     `;
 
-    row.querySelector(".saveBtn").addEventListener("click", function () {
-        handleSaveEdit(this);
+    row.querySelector(".saveBtn").addEventListener("click", async function () {
+        await handleSaveEdit(this);
     });
     row.querySelector(".cancelBtn").addEventListener("click", function () {
         handleCancelEdit(this);
     });
 }
+
 // Function to handle saving edits
-function handleSaveEdit(button) {
+async function handleSaveEdit(button) {
     const row = button.closest('tr');
-    console.log(row, "ROWWWWW")
     const table = button.closest('table');
-
-
     const thead = table.querySelector('thead tr');
-    console.log(thead, "ASDF")
-
-    // Extract column names 
+    
     const columnNames = Array.from(thead.cells).map(cell => cell.getAttribute("name"));
-    console.log(columnNames, "Colum")
-
 
     // Gather updated data
     const inputs = Array.from(row.querySelectorAll('input'));
     const data = {};
 
-
     inputs.forEach((input, index) => {
         const columnName = columnNames[index];
-
         if (columnName) {
             data[columnName] = input.value;
         }
     });
 
-    console.log(data, "Mapped Data");
     row.cells[row.cells.length - 1].innerHTML = `
         <button class="editBtn">Edit</button>
         <button class="deleteBtn">Delete</button>
     `;
 
-    // Determine DocType
     const doctype = table.id === 'bookTable' ? 'Books' : 'Members';
-    const name = row.cells[0].querySelector("input").value; 
-    console.log(name, "Mayuri")
-    // console.log(row.,"ROW")
+    const name = row.cells[0].querySelector("input").value;
 
-    fetch(`/api/v2/document/${doctype}/${name}`, {
+    try {
+        const response = await fetch(`/api/v2/document/${doctype}/${name}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `token 16cf5940b269f4e:ae6c12a8ecc806f`
+            },
+            body: JSON.stringify(data)
+        });
 
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `token 16cf5940b269f4e:ae6c12a8ecc806f` 
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response =>
-
-
-            response.json())
-        .then(result => {
-            if (result.data) {
-                alert(`${doctype} updated successfully!`);
-                location.reload(); 
-            } else {
-                alert('Failed to update the document.');
-            }
-        })
-        .catch(error =>
-            console.error('Error:', error)
-        )
+        const result = await response.json();
+        if (result.data) {
+            alert(`${doctype} updated successfully!`);
+            location.reload();
+        } else {
+            alert('Failed to update the document.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
 // Function to handle canceling edit
@@ -92,7 +74,6 @@ function handleCancelEdit(button) {
     const row = button.closest('tr');
     const inputs = row.querySelectorAll('input');
 
-    
     inputs.forEach((input, index) => {
         row.cells[index].innerText = input.defaultValue;
     });
@@ -102,53 +83,45 @@ function handleCancelEdit(button) {
         <button class="deleteBtn">Delete</button>
     `;
 
-    // Reattach event listeners to buttons
     row.querySelector(".editBtn").addEventListener("click", function () {
         handleEditRow(this);
     });
-    row.querySelector(".deleteBtn").addEventListener("click", function () {
-        handleDeleteRow(this);
+    row.querySelector(".deleteBtn").addEventListener("click", async function () {
+        await handleDeleteRow(this);
     });
 }
 
 // Function to handle deleting a row
-function handleDeleteRow(button) {
+async function handleDeleteRow(button) {
     const row = button.closest('tr');
     const doctype = button.closest('table').id === 'bookTable' ? 'Books' : 'Members';
-    const name = row.cells[0].textContent.trim(); 
-    console.log(name, "Document Name to Delete");
+    const name = row.cells[0].textContent.trim();
 
-    // Confirm deletion
     if (confirm(`Are you sure you want to delete this ${doctype}?`)) {
-        
-        fetch(`/api/v2/document/${doctype}/${name}`,{
-            method: 'DELETE',
-            headers: {
-                'Authorization': `token 16cf5940b269f4e:ae6c12a8ecc806f` 
-            }
-        })
-            .then(response => {
-                console.log(response, "Response")
-                if (response.ok) {
-                    alert(`${doctype} "${name}" has been successfully deleted.`);
-                    row.remove(); 
-                } else {
-                    return response.json();
+        try {
+            const response = await fetch(`/api/v2/document/${doctype}/${name}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `token 16cf5940b269f4e:ae6c12a8ecc806f`
                 }
-            })
-            .then(result => {
-                console.log(result,"result")
+            });
+
+            if (response.ok) {
+                alert(`${doctype} "${name}" has been successfully deleted.`);
+                row.remove();
+            } else {
+                const result = await response.json();
                 if (result?.errors?.length) {
                     alert(`Error: ${result.errors[0].message}`);
                 }
-            })
-            .catch(error => {
-                
-                console.error('Error:', error)
-            });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 }
 
+// Event listeners for edit and delete buttons
 document.querySelectorAll("#bookTable .editBtn, #memberTable .editBtn").forEach(button => {
     button.addEventListener("click", function () {
         handleEditRow(this);
@@ -156,10 +129,13 @@ document.querySelectorAll("#bookTable .editBtn, #memberTable .editBtn").forEach(
 });
 
 document.querySelectorAll("#bookTable .deleteBtn, #memberTable .deleteBtn").forEach(button => {
-    button.addEventListener("click", function () {
-        handleDeleteRow(this);
+    button.addEventListener("click", async function () {
+        await handleDeleteRow(this);
     });
 });
+
+
+
 
 
 async function searchItems() {
@@ -174,7 +150,7 @@ async function searchItems() {
     });
 
     if (!searchInput) {
-        return; // Exit if  empty
+        return; 
     }
 
     try {
@@ -186,7 +162,6 @@ async function searchItems() {
 
             // console.log('Row content:', rowContent); 
 
-            // Check if  cell contains the search input
             if (rowContent.some(content => content.includes(searchInput))) {
                 row.style.backgroundColor = 'rgba(173, 216, 230, 1)'; 
                 found = true;
@@ -203,68 +178,52 @@ async function searchItems() {
 
 
 
-// Function to mark the transaction as returned
-function markReturn(btn, transactionId) {
-    console.log("Button clicked:", btn);
-    console.log("Transaction ID Passed:", transactionId);
-
-    
+async function markReturn(btn, transactionId) {
     const row = btn.closest('tr');
 
-    
     if (!transactionId) {
         alert("Transaction ID is missing!");
-        console.error("Transaction ID is missing!");
         return;
     }
-
-    // Confirm action
     if (!confirm(`Are you sure you want to mark Transaction ID ${transactionId} as Returned?`)) {
         return;
     }
 
-    
-
-    // Make the API call
-    fetch(`/api/v2/document/Transactions/${transactionId}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `token 16cf5940b269f4e:ae6c12a8ecc806f`, 
-        },
-        body: JSON.stringify({
-            status: "Returned", 
-        }),
-    })
-        .then((res) => {
-            console.log("Raw Response:", res);
-            return res.json();
-        })
-        .then((result) => {
-            console.log("Parsed Response:", result);
-
-            if (result.data) {
-                alert(`Transaction ID ${transactionId} marked as Returned successfully!`);
-                
-                row.remove(); 
-            } else {
-                alert("Failed to update the transaction.");
-                console.error("API returned an error:", result);
-            }
-        })
-        .catch((err) => {
-            console.error("Fetch Error:", err);
-            alert("An error occurred while marking the transaction as Returned.");
+    try {
+        const response = await fetch(`/api/v2/document/Transactions/${transactionId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `token 16cf5940b269f4e:ae6c12a8ecc806f`, 
+            },
+            body: JSON.stringify({
+                status: "Returned", 
+            }),
         });
+
+        const result = await response.json();
+
+        if (result.data) {
+            alert(`Transaction ID ${transactionId} marked as Returned successfully!`);
+            row.remove();  
+        } else {
+            alert("Failed to update the transaction.");
+        }
+    } catch (error) {
+        alert("An error occurred while marking the transaction as Returned.");
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.btn-return');
     buttons.forEach((button) => {
         const transactionId = button.closest('tr').querySelector('td:nth-child(1)').textContent.trim(); 
-        button.setAttribute('onclick', `markReturn(this, '${transactionId}')`);
+        button.addEventListener('click', async function () {
+            await markReturn(this, transactionId);
+        });
     });
 });
+
 
 
 //Import
@@ -272,9 +231,8 @@ document.getElementById("importBooksBtn").addEventListener("click", importBooks)
 
 async function importBooks() {
     try {
-        console.log("Import Books button clicked!");
+        // console.log("Import Books button clicked!");
         
-        // Fetch data from the external API
         const response = await fetch("https://frappe.io/api/method/frappe-library?page=2", {
             method: 'GET',
             headers: {
@@ -291,10 +249,14 @@ async function importBooks() {
         
         if (data.message && data.message.length > 0) {
             for (const book of data.message) {
+                let key=Object.keys(book);
+                let numpagesKey= key.find(key=> key.trim()==="num_pages");
+                let numPagesValue=numpagesKey ? book[numpagesKey] :undefined;
+                // console.log("Vallll :",numPagesValue)
                 const bookData = {
                     title: book.title,
                     book_id: book.bookID,
-                    number_of_pages: book.  num_pages,
+                    number_of_pages: numPagesValue,
                     author: book.authors,
                     isbn: book.isbn,
                     publisher: book.publisher,

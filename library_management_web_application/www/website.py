@@ -11,7 +11,7 @@ def get_context(context):
 
     context.books = frappe.get_all(
         'Books', 
-        fields=['title','book_id','name','isbn','stock_quantity', 'author', 'publisher']
+        fields=['title','number_of_pages','book_id','name','isbn','stock_quantity', 'author', 'publisher']
     )
     context.issued_books = frappe.get_all(
         'Transactions', 
