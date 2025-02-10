@@ -1,4 +1,4 @@
-// handle editing a row
+// Function to handle editing a row
 function handleEditRow(button) {
     const row = button.closest('tr');
     Array.from(row.cells).forEach((cell, index) => {
@@ -20,7 +20,8 @@ function handleEditRow(button) {
     });
 }
 
-//  handle saving edits button
+
+//SaveEdit Function
 async function handleSaveEdit(button) {
     const row = button.closest('tr');
     const table = button.closest('table');
@@ -52,7 +53,7 @@ async function handleSaveEdit(button) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `token 16cf5940b269f4e:ae6c12a8ecc806f`
+                'Authorization': `token 52617a345240bc7:ee81ddc7c042e09`
             },
             body: JSON.stringify(data)
         });
@@ -69,7 +70,7 @@ async function handleSaveEdit(button) {
     }
 }
 
-//Handle Cancel Edit Button
+//CancelEdit Function
 function handleCancelEdit(button) {
     const row = button.closest('tr');
     const inputs = row.querySelectorAll('input');
@@ -91,7 +92,6 @@ function handleCancelEdit(button) {
     });
 }
 
-//Delete Row Handaling
 async function handleDeleteRow(button) {
     const row = button.closest('tr');
     const doctype = button.closest('table').id === 'bookTable' ? 'Books' : 'Members';
@@ -102,7 +102,7 @@ async function handleDeleteRow(button) {
             const response = await fetch(`/api/v2/document/${doctype}/${name}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `token 16cf5940b269f4e:ae6c12a8ecc806f`
+                    'Authorization': `token 52617a345240bc7:ee81ddc7c042e09`
                 }
             });
 
@@ -135,18 +135,15 @@ document.querySelectorAll("#bookTable .deleteBtn, #memberTable .deleteBtn").forE
 
 
 
-
 //Search Input
-
 async function searchItems() {
     const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
 
-    
     const tableRows = document.querySelectorAll('#bookTable tbody tr');
 
     
     tableRows.forEach(row => {
-        row.style.backgroundColor = ''; 
+        row.style.backgroundColor = '';
     });
 
     if (!searchInput) {
@@ -168,10 +165,13 @@ async function searchItems() {
             }
         });
 
+
+
         if (!found) {
             alert(`No results found for "${searchInput}".`);
         }
 
+        // Reorder table to move matched rows to the top
         const tableBody = document.querySelector('#bookTable tbody'); 
         const sortedRows = Array.from(tableRows).sort((rowA, rowB) => {
             const aHighlighted = rowA.style.backgroundColor !== '';
@@ -187,11 +187,7 @@ async function searchItems() {
 }
 
 
-        
-
-
-
-
+//Mark As Return
 async function markReturn(btn, transactionId) {
     const row = btn.closest('tr');
 
@@ -204,11 +200,11 @@ async function markReturn(btn, transactionId) {
     }
 
     try {
-        const response = await fetch(`api/v2/document/Transactions/${transactionId}`, {
+        const response = await fetch(`/api/v2/document/Transactions/${transactionId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `token 16cf5940b269f4e:ae6c12a8ecc806f`, 
+                "Authorization": `token 52617a345240bc7:ee81ddc7c042e09`, 
             },
             body: JSON.stringify({
                 status: "Returned", 
@@ -216,20 +212,19 @@ async function markReturn(btn, transactionId) {
         });
 
         const result = await response.json();
-        console.log(result,"reeeee")
 
         if (result.data) {
-            alert(`Transaction ID ${transactionId} marked as Returned successfully!`);
+            alert(`Transaction ID ${transactionId} marked as Returned successfully! \n Note: You are being charged a late fine of 20 per day  `
+            );
             row.remove();  
         } else {
             alert("Failed to update the transaction.");
         }
     } catch (error) {
         alert("An error occurred while marking the transaction as Returned.");
-        
-        
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.btn-return');
@@ -243,8 +238,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-//Import
+// Tab
+document.addEventListener("DOMContentLoaded", function() {
+    
+    const tabs = document.querySelectorAll(".tabs button");
+    
+    
+    const bookSection = document.querySelector(".section#bookList");
+    const memberSection = document.querySelector(".section#memberList");
+    const issuedBooksSection = document.querySelector(".section#issuedBooks");
+    const returnBooksSection = document.querySelector(".section#returnBooks");
 
+    function handleTabClick(event) {
+        const tabText = event.target.innerText.toLowerCase();
+
+        //hide sections
+        bookSection.style.display = "none";
+        memberSection.style.display = "none";
+        issuedBooksSection.style.display = "none";
+        returnBooksSection.style.display = "none";
+
+        
+        if (tabText === "books") {
+            bookSection.style.display = "block";
+        } else if (tabText === "members") {
+            memberSection.style.display = "block";
+        } else if (tabText === "transactions") {
+            issuedBooksSection.style.display = "block";
+            returnBooksSection.style.display = "block";
+        } else {
+            // For "All" tab
+            bookSection.style.display = "block";
+            memberSection.style.display = "block";
+            issuedBooksSection.style.display = "block";
+            returnBooksSection.style.display = "block";
+        }
+
+        tabs.forEach(tab => tab.classList.remove("active"));
+        event.target.classList.add("active");
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", handleTabClick);
+    });
+
+    tabs[0].click();
+});  
+
+
+
+//import
 document.getElementById("importBooksBtn").addEventListener("click", importBooks);
 
 async function importBooks() {
@@ -264,39 +307,51 @@ async function importBooks() {
         }
 
         const response = await fetch(apiUrl, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-        console.log(response,"response");
 
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
+        console.log("Books data fetched:", data);
 
         if (data.message && data.message.length > 0) {
-            
             let successCount = 0, errorCount = 0;
             
             for (const book of data.message) {
-                let key = Object.keys(book);
-                let numpagesKey = key.find(key => key.trim() === "num_pages");
-                let numPagesValue = numpagesKey ? book[numpagesKey] : undefined;
+                // let key = Object.keys(book);
+                // let numpagesKey = key.find(key => key.trim() === "num_pages");
+                // let numPagesValue = numpagesKey ? book[numpagesKey] : undefined;
+
+                const cleanedBook = {};
+                for (const key in book) {
+                    cleanedBook[key.trim()] = book[key];  // Remove spaces from key names
+                }
             
                 const bookData = {
-                    title: book.title,
-                    book_id: book.bookID,
-                    number_of_pages:numPagesValue,
-                    author: book.authors,
-                    isbn: book.isbn,
-                    publisher: book.publisher,
+                    title: cleanedBook.title,
+                    book_id: cleanedBook.bookID,
+                    number_of_pages: cleanedBook.num_pages || 0,  // Use cleaned key name
+                    author: cleanedBook.authors,
+                    isbn: cleanedBook.isbn,
+                    publisher: cleanedBook.publisher,
                     stock_quantity: 20
                 };
-                
+                // const bookData = {
+                //     title: book.title,
+                //     book_id: book.bookID,
+                //     number_of_pages:numPagesValue,
+                //     author: book.authors,
+                //     isbn: book.isbn,
+                //     publisher: book.publisher,
+                //     stock_quantity: 20
+                // };
 
                 try {
                     const result = await createBookInDoctype(bookData);
-                    
+
                     if (result && result.data && result.data.name) {
                         successCount++;
                     } else {
-                        errorCount++; 
+                        errorCount++;
                     }
                 } catch (error) {
                     console.error(`Failed to import book: ${book.title}`, error);
@@ -324,7 +379,7 @@ async function createBookInDoctype(bookData) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": `token 16cf5940b269f4e:ae6c12a8ecc806f`,
+                "Authorization": `token 52617a345240bc7:ee81ddc7c042e09`,
             },
             body: JSON.stringify(bookData)
         });
@@ -343,55 +398,47 @@ async function createBookInDoctype(bookData) {
         return responseData;
     } catch (error) {
         console.error("Error creating book in Doctype:", error);
-        return null;  
+        return null;  // Return null to avoid undefined issues in the counter
     }
 }
 
 
 
-//tab
-document.addEventListener("DOMContentLoaded", function() {
-    
-    const tabs = document.querySelectorAll(".tabs button");
-    
-    
-    const bookSection = document.querySelector(".section#bookList");
-    const memberSection = document.querySelector(".section#memberList");
-    const issuedBooksSection = document.querySelector(".section#issuedBooks");
-    const returnBooksSection = document.querySelector(".section#returnBooks");
 
-    function handleTabClick(event) {
-        const tabText = event.target.innerText.toLowerCase();
 
-        
-        bookSection.style.display = "none";
-        memberSection.style.display = "none";
-        issuedBooksSection.style.display = "none";
-        returnBooksSection.style.display = "none";
+// async function searchItems() {
+//     const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
 
-        
-        if (tabText === "books") {
-            bookSection.style.display = "block";
-        } else if (tabText === "members") {
-            memberSection.style.display = "block";
-        } else if (tabText === "transactions") {
-            issuedBooksSection.style.display = "block";
-            returnBooksSection.style.display = "block";
-        } else {
+    
+//     const tableRows = document.querySelectorAll('#bookTable tbody tr');
+
+    
+//     tableRows.forEach(row => {
+//         row.style.backgroundColor = ''; 
+//     });
+
+//     if (!searchInput) {
+//         return; 
+//     }
+
+//     try {
+//         let found = false;
+//         tableRows.forEach(row => {
+//             const cells = row.querySelectorAll('td'); 
             
-            bookSection.style.display = "block";
-            memberSection.style.display = "block";
-            issuedBooksSection.style.display = "block";
-            returnBooksSection.style.display = "block";
-        }
+//             const rowContent = Array.from(cells).map(cell => cell.textContent.toLowerCase());
 
-        tabs.forEach(tab => tab.classList.remove("active"));
-        event.target.classList.add("active");
-    }
 
-    tabs.forEach(tab => {
-        tab.addEventListener("click", handleTabClick);
-    });
+//             if (rowContent.some(content => content.includes(searchInput))) {
+//                 row.style.backgroundColor = 'rgba(173, 216, 230, 1)'; 
+//                 found = true;
+//             }
+//         });
 
-    tabs[0].click();
-});  
+//         if (!found) {
+//             alert(`No results found for "${searchInput}".`);
+//         }
+//     } catch (error) {
+//         console.error('Error searching and highlighting rows:', error);
+//     }
+// }

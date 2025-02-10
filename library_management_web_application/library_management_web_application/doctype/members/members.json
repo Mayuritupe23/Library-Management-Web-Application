@@ -2,6 +2,7 @@
  "actions": [],
  "autoname": "format:{member_id}",
  "creation": "2025-01-09 15:52:13.669065",
+ "default_view": "List",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -22,19 +23,23 @@
   {
    "fieldname": "email",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Email",
    "reqd": 1
   },
   {
    "fieldname": "phone_number",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Phone Number"
   },
   {
    "default": "0",
    "fieldname": "outstanding_debt",
    "fieldtype": "Currency",
-   "label": "Outstanding Debt"
+   "in_list_view": 1,
+   "label": "Outstanding Debt",
+   "read_only": 1
   },
   {
    "fieldname": "member_id",
@@ -45,7 +50,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 11:44:39.023234",
+ "modified": "2025-02-09 21:37:26.248766",
  "modified_by": "Administrator",
  "module": "Library Management Web Application",
  "name": "Members",

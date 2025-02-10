@@ -17,7 +17,8 @@
   "book_id",
   "return_date",
   "status",
-  "fine"
+  "late_fine",
+  "amended_from"
  ],
  "fields": [
   {
@@ -37,17 +38,16 @@
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.status ==\"Issued\"",
    "fieldname": "issue_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Issue Date"
+   "label": "Issue Date",
+   "reqd": 1
   },
   {
-   "depends_on": "eval:doc.status==\"Issued\"",
+   "description": "10 Rupies/Day",
    "fieldname": "rent_fee",
    "fieldtype": "Currency",
-   "in_list_view": 1,
    "label": "Rent Fee",
    "options": "Issued\nReturned",
    "read_only": 1
@@ -60,7 +60,6 @@
    "fetch_from": "member.member_id",
    "fieldname": "member_id",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Member ID",
    "reqd": 1
   },
@@ -68,16 +67,13 @@
    "fetch_from": "book.book_id",
    "fieldname": "book_id",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Book ID"
   },
   {
-   "depends_on": "eval:doc.status == \"Returned\"",
+   "depends_on": "eval:doc.status==\"Returned\"",
    "fieldname": "return_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Return Date",
-   "read_only": 1
+   "label": "Return Date"
   },
   {
    "default": "Issued",
@@ -92,19 +88,32 @@
    "fieldname": "due_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Due Date"
+   "label": "Due Date",
+   "read_only_depends_on": "eval:doc.satus==\"returned\"",
+   "reqd": 1
   },
   {
    "depends_on": "eval:doc.status==\"Returned\"",
-   "fieldname": "fine",
+   "description": "20 Rupies/Day",
+   "fieldname": "late_fine",
    "fieldtype": "Currency",
-   "label": "Fine",
+   "label": "Late Fine",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Transactions",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-25 09:19:24.447514",
+ "modified": "2025-02-10 12:59:55.173018",
  "modified_by": "Administrator",
  "module": "Library Management Web Application",
  "name": "Transactions",

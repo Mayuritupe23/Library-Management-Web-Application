@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Library Management</h1>
+            <h1>Library Management System</h1>
             <div class="profile">
                 <img src="mayuri.jpg" alt="User Profile">
                 <div>
@@ -30,7 +30,19 @@
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Search for book name, member name, etc.">
             <button onclick="searchItems()" id="search-btn">Search</button>
+        
+            <label for="filterType">Filter By:</label>
+            <select id="filterType">
+                <option value="none">None</option>
+                <option value="authors">Authors</option>
+                <option value="title">Title</option>
+            </select>
+
+            <input type="text" id="filterValue" placeholder="Enter filter value">
             <button id="importBooksBtn">Import Books</button>
+            <div id="statusMessage" style="margin-top: 10px; font-weight: bold;"></div> 
+
+
         </div>
         
 
@@ -167,7 +179,7 @@
                             <th>Issued Date</th>
                             <th>Due Date</th>
                             <th>Return Date</th>
-                            <th>Fine</th>
+                            <th>Late Fine</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -180,7 +192,7 @@
                             <td>{{ k.issue_date }}</td>
                             <td>{{ k.due_date }}</td>
                             <td>{{ k.return_date }}</td>
-                            <td>{{ k.fine }}</td>
+                            <td>{{ k.late_fine }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

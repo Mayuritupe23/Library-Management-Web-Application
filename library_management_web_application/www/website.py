@@ -1,6 +1,6 @@
 
 
-# import requests
+
 import frappe
 
 def get_context(context):
@@ -21,6 +21,6 @@ def get_context(context):
     context.return_books = frappe.get_all(
         'Transactions', 
         filters={"Status":"Returned"},
-        fields=['member.full_name','fine','book.title','issue_date','due_date', 'return_date','status','member_id','book_id','rent_fee']
+        fields=['member.full_name','late_fine','book.title','issue_date','due_date', 'return_date','status','member_id','book_id','rent_fee']
      )
 
