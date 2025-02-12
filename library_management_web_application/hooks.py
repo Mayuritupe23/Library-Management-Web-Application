@@ -149,7 +149,7 @@ doctype_js = {"Books" : "public/js/books_list.js"}
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"library_management_web_application.tasks.all"
 # 	],
@@ -162,10 +162,16 @@ doctype_js = {"Books" : "public/js/books_list.js"}
 # 	"weekly": [
 # 		"library_management_web_application.tasks.weekly"
 # 	],
-# 	"monthly": [
-# 		"library_management_web_application.tasks.monthly"
-# 	],
-# }
+	# "monthly": [
+	# 	"library_management_web_application.hello.print_hello"
+	# ],
+
+	"cron": {
+		"58 10 * * *": [
+			"library_management_web_application.hello.print_hello"
+		]
+	}
+}
 
 # Testing
 # -------

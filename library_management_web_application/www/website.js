@@ -27,9 +27,9 @@ async function handleSaveEdit(button) {
     const thead = table.querySelector('thead tr');
     
     const columnNames = Array.from(thead.cells).map(cell => cell.getAttribute("name"));
-
     
     const inputs = Array.from(row.querySelectorAll('input'));
+    
     const data = {};
 
     inputs.forEach((input, index) => {
@@ -73,6 +73,7 @@ async function handleSaveEdit(button) {
 function handleCancelEdit(button) {
     const row = button.closest('tr');
     const inputs = row.querySelectorAll('input');
+    
 
     inputs.forEach((input, index) => {
         row.cells[index].innerText = input.defaultValue;
@@ -188,10 +189,7 @@ async function searchItems() {
 
 
         
-
-
-
-
+//markReturn
 async function markReturn(btn, transactionId) {
     const row = btn.closest('tr');
 
@@ -216,7 +214,7 @@ async function markReturn(btn, transactionId) {
         });
 
         const result = await response.json();
-        console.log(result,"reeeee")
+        
 
         if (result.data) {
             alert(`Transaction ID ${transactionId} marked as Returned successfully!`);

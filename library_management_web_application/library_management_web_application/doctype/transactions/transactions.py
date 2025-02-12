@@ -8,6 +8,13 @@ class Transactions(Document):
         
         if self.status == "Issued":
             member = frappe.get_doc("Members", self.member)
+            issued_record = frappe.db.exists(
+                "Transactions",
+                {"member": self.member, "book": self.book, "status": "Issued"}
+            )
+            if issued_record:
+                frappe.throw("You cannot issue the same book again until it is returned.")
+
             if member.outstanding_debt > 500:
                 frappe.throw(
                     "Outstanding debt exceeds ₹500. You cannot issue a new book until the debt is cleared."
@@ -24,6 +31,17 @@ class Transactions(Document):
             book.save()
 
     def before_save(self):
+        issued_record = frappe.db.get_value(
+                'Transactions',
+                {"member": self.member, "book": self.book, "status": "Issued"},
+                ["name","issue_date", "due_date", "rent_fee"],
+                as_dict=True
+            )
+        if issued_record and self.name != issued_record['name'] and self.status != "Issued":
+            frappe.throw(
+                f"You cannot create a new transaction for returning this book. "
+                f"Please return it from the original transaction (ID: {issued_record['name']})."
+            )
         if self.status == "Issued" and self.issue_date and self.due_date:
             issue_date = datetime.strptime(self.issue_date, '%Y-%m-%d')
             due_date = datetime.strptime(self.due_date, '%Y-%m-%d')
@@ -39,15 +57,10 @@ class Transactions(Document):
             )
 
         elif self.status == "Returned":
-            issued_record = frappe.db.get_value(
-                'Transactions',
-                {"member": self.member, "book": self.book, "status": "Issued"},
-                ["issue_date", "due_date", "rent_fee"],
-                as_dict=True
-            )
+            
             if not issued_record:
                 frappe.throw("You cannot return this book because it has not been issued yet.")
-
+            
             self.issue_date = issued_record["issue_date"]
             self.due_date = issued_record["due_date"]
             self.rent_fee = issued_record["rent_fee"]
@@ -64,3 +77,5 @@ class Transactions(Document):
                 frappe.msgprint(
                     f"You returned the book {delay_days} days late. A late fee of ₹{self.late_fine} has been added to your outstanding debt."
                 )
+
+        
