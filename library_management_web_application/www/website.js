@@ -139,53 +139,53 @@ document.querySelectorAll("#bookTable .deleteBtn, #memberTable .deleteBtn").forE
 
 //Search Input
 
-async function searchItems() {
-    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+// async function searchItems() {
+//     const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
 
     
-    const tableRows = document.querySelectorAll('#bookTable tbody tr');
+//     const tableRows = document.querySelectorAll('#bookTable tbody tr');
 
     
-    tableRows.forEach(row => {
-        row.style.backgroundColor = ''; 
-    });
+//     tableRows.forEach(row => {
+//         row.style.backgroundColor = ''; 
+//     });
 
-    if (!searchInput) {
-        return; 
-    }
+//     if (!searchInput) {
+//         return; 
+//     }
 
-    try {
-        let found = false;
-        tableRows.forEach(row => {
-            const cells = row.querySelectorAll('td'); 
-            const bookTitle = cells[0]?.textContent.toLowerCase();  
-            const authorName = cells[2]?.textContent.toLowerCase(); 
+//     try {
+//         let found = false;
+//         tableRows.forEach(row => {
+//             const cells = row.querySelectorAll('td'); 
+//             const bookTitle = cells[0]?.textContent.toLowerCase();  
+//             const authorName = cells[2]?.textContent.toLowerCase(); 
 
-            console.log(`Checking: Title="${bookTitle}", Author="${authorName}"`);
+//             console.log(`Checking: Title="${bookTitle}", Author="${authorName}"`);
 
-            if (bookTitle.includes(searchInput) || authorName.includes(searchInput)) {
-                row.style.backgroundColor = 'rgba(173, 216, 230, 1)'; 
-                found = true;
-            }
-        });
+//             if (bookTitle.includes(searchInput) || authorName.includes(searchInput)) {
+//                 row.style.backgroundColor = 'rgba(173, 216, 230, 1)'; 
+//                 found = true;
+//             }
+//         });
 
-        if (!found) {
-            alert(`No results found for "${searchInput}".`);
-        }
+//         if (!found) {
+//             alert(`No results found for "${searchInput}".`);
+//         }
 
-        const tableBody = document.querySelector('#bookTable tbody'); 
-        const sortedRows = Array.from(tableRows).sort((rowA, rowB) => {
-            const aHighlighted = rowA.style.backgroundColor !== '';
-            const bHighlighted = rowB.style.backgroundColor !== '';
-            return bHighlighted - aHighlighted; 
-        });
+//         const tableBody = document.querySelector('#bookTable tbody'); 
+//         const sortedRows = Array.from(tableRows).sort((rowA, rowB) => {
+//             const aHighlighted = rowA.style.backgroundColor !== '';
+//             const bHighlighted = rowB.style.backgroundColor !== '';
+//             return bHighlighted - aHighlighted; 
+//         });
 
-        sortedRows.forEach(row => tableBody.appendChild(row));
+//         sortedRows.forEach(row => tableBody.appendChild(row));
 
-    } catch (error) {
-        console.error('Error searching and highlighting rows:', error);
-    }
-}
+//     } catch (error) {
+//         console.error('Error searching and highlighting rows:', error);
+//     }
+// }
 
 
         
@@ -219,6 +219,7 @@ async function markReturn(btn, transactionId) {
         if (result.data) {
             alert(`Transaction ID ${transactionId} marked as Returned successfully!`);
             row.remove();  
+            location.reload();
         } else {
             alert("Failed to update the transaction.");
         }
@@ -393,3 +394,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
     tabs[0].click();
 });  
+
+
+
+
+async function searchItems() {
+    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+    const tableRows = document.querySelectorAll('#returnTable tbody tr');
+
+    if (!searchInput) {
+        tableRows.forEach(row => row.style.display = '');
+        return;
+    }
+
+    let found = false;
+
+    tableRows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const memberName = cells[2]?.textContent.toLowerCase();
+        const memberId = cells[3]?.textContent.toLowerCase();
+
+        if (memberName.includes(searchInput) || memberId.includes(searchInput)) {
+            row.style.display = '';
+            found = true;
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    if (!found) {
+        alert(`No results found for "${searchInput}".`);
+    }
+}
