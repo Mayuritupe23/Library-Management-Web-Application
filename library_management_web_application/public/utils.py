@@ -1,29 +1,23 @@
 import requests
 import frappe
 import json
-import importlib
-
-g_my_app_version = importlib.import_module("library_management_web_application").__version__
+from library_management_web_application.__init__  import __version__
 
 
 class hns_utils:
-    # def __init__(self):
-    #     self.g_my_app_version = importlib.import_module("library_management_web_application").__version__
+    def __init__(self):
+        self.g_my_app_version = __version__ 
         
 
-    # def add_global_headers(response):
-    #     response.headers["X-Erpnext-Version"] = self.g_my_app_version
-    #     return response
-
-    def add_global_headers(self, response):
-        """Add global headers to response"""
-        response.headers["X-Erpnext-Version"] = str(g_my_app_version)
-        frappe.logger().info(f"Updated Headers: {response.headers}")
+    def add_global_headers(self,response):
+        response.headers["X-Erpnext-Version"] = self.g_my_app_version
         return response
-
 
     # @frappe.whitelist(allow_guest=True)
     def check_version(self):
+
+        self.m_client_version = frappe.request.headers.get("X-Erpnext-Version", "Unknown")
+
            
         api_url = "http://braininfotech.com/sysControl/apis/versions/app_name/ERPNext"
         headers = {
@@ -48,10 +42,13 @@ class hns_utils:
             api_version = data.get("data", [{}])[0].get("version_no", "")
             frappe.msgprint(f'api_version:{api_version}, my_api_version:{self.g_my_app_version}')
 
-            if api_version == self.g_my_app_version:
+            if api_version == self.m_client_version:
                 return {"status": "success", "message": "Version matches"}
             else:
                 return {"status": "errors", "message": f'Version mismatch.{self.g_my_app_version}, api version:{api_version}' } 
 
         except Exception as e:
             return {"status": "error", "message": str(e)}
+
+def add_global_headers(response):
+    return hns_utils().add_global_headers(response)
