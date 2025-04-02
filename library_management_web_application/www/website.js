@@ -1,5 +1,7 @@
 // handle editing a row
 function handleEditRow(button) {
+    
+
     const row = button.closest('tr');
     Array.from(row.cells).forEach((cell, index) => {
         if (index < row.cells.length - 1) {
@@ -52,7 +54,7 @@ async function handleSaveEdit(button) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `token 16cf5940b269f4e:ae6c12a8ecc806f`
+                'Authorization': `token 16cf5940b269f4e:77cb31877482f2a`
             },
             body: JSON.stringify(data)
         });
@@ -103,7 +105,7 @@ async function handleDeleteRow(button) {
             const response = await fetch(`/api/v2/document/${doctype}/${name}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `token 16cf5940b269f4e:ae6c12a8ecc806f`
+                    'Authorization': `token 16cf5940b269f4e:77cb31877482f2a`
                 }
             });
 
@@ -137,55 +139,55 @@ document.querySelectorAll("#bookTable .deleteBtn, #memberTable .deleteBtn").forE
 
 
 
-//Search Input
+// Search Input
 
-// async function searchItems() {
-//     const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
-
-    
-//     const tableRows = document.querySelectorAll('#bookTable tbody tr');
+async function searchItems() {
+    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
 
     
-//     tableRows.forEach(row => {
-//         row.style.backgroundColor = ''; 
-//     });
+    const tableRows = document.querySelectorAll('#bookTable tbody tr');
 
-//     if (!searchInput) {
-//         return; 
-//     }
+    
+    tableRows.forEach(row => {
+        row.style.backgroundColor = ''; 
+    });
 
-//     try {
-//         let found = false;
-//         tableRows.forEach(row => {
-//             const cells = row.querySelectorAll('td'); 
-//             const bookTitle = cells[0]?.textContent.toLowerCase();  
-//             const authorName = cells[2]?.textContent.toLowerCase(); 
+    if (!searchInput) {
+        return; 
+    }
 
-//             console.log(`Checking: Title="${bookTitle}", Author="${authorName}"`);
+    try {
+        let found = false;
+        tableRows.forEach(row => {
+            const cells = row.querySelectorAll('td'); 
+            const bookTitle = cells[0]?.textContent.toLowerCase();  
+            const authorName = cells[2]?.textContent.toLowerCase(); 
 
-//             if (bookTitle.includes(searchInput) || authorName.includes(searchInput)) {
-//                 row.style.backgroundColor = 'rgba(173, 216, 230, 1)'; 
-//                 found = true;
-//             }
-//         });
+            console.log(`Checking: Title="${bookTitle}", Author="${authorName}"`);
 
-//         if (!found) {
-//             alert(`No results found for "${searchInput}".`);
-//         }
+            if (bookTitle.includes(searchInput) || authorName.includes(searchInput)) {
+                row.style.backgroundColor = 'rgba(173, 216, 230, 1)'; 
+                found = true;
+            }
+        });
 
-//         const tableBody = document.querySelector('#bookTable tbody'); 
-//         const sortedRows = Array.from(tableRows).sort((rowA, rowB) => {
-//             const aHighlighted = rowA.style.backgroundColor !== '';
-//             const bHighlighted = rowB.style.backgroundColor !== '';
-//             return bHighlighted - aHighlighted; 
-//         });
+        if (!found) {
+            alert(`No results found for "${searchInput}".`);
+        }
 
-//         sortedRows.forEach(row => tableBody.appendChild(row));
+        const tableBody = document.querySelector('#bookTable tbody'); 
+        const sortedRows = Array.from(tableRows).sort((rowA, rowB) => {
+            const aHighlighted = rowA.style.backgroundColor !== '';
+            const bHighlighted = rowB.style.backgroundColor !== '';
+            return bHighlighted - aHighlighted; 
+        });
 
-//     } catch (error) {
-//         console.error('Error searching and highlighting rows:', error);
-//     }
-// }
+        sortedRows.forEach(row => tableBody.appendChild(row));
+
+    } catch (error) {
+        console.error('Error searching and highlighting rows:', error);
+    }
+}
 
 
         
@@ -206,7 +208,7 @@ async function markReturn(btn, transactionId) {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `token 16cf5940b269f4e:ae6c12a8ecc806f`, 
+                "Authorization": `token 16cf5940b269f4e:77cb31877482f2a`, 
             },
             body: JSON.stringify({
                 status: "Returned", 
@@ -323,7 +325,7 @@ async function createBookInDoctype(bookData) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": `token 16cf5940b269f4e:ae6c12a8ecc806f`,
+                "Authorization": `token 16cf5940b269f4e:77cb31877482f2a`,
             },
             body: JSON.stringify(bookData)
         });
@@ -398,31 +400,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-async function searchItems() {
-    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
-    const tableRows = document.querySelectorAll('#returnTable tbody tr');
+// async function searchItems() {
+//     const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+//     const tableRows = document.querySelectorAll('#returnTable tbody tr');
 
-    if (!searchInput) {
-        tableRows.forEach(row => row.style.display = '');
-        return;
-    }
+//     if (!searchInput) {
+//         tableRows.forEach(row => row.style.display = '');
+//         return;
+//     }
 
-    let found = false;
+//     let found = false;
 
-    tableRows.forEach(row => {
-        const cells = row.querySelectorAll('td');
-        const memberName = cells[2]?.textContent.toLowerCase();
-        const memberId = cells[3]?.textContent.toLowerCase();
+//     tableRows.forEach(row => {
+//         const cells = row.querySelectorAll('td');
+//         const memberName = cells[2]?.textContent.toLowerCase();
+//         const memberId = cells[3]?.textContent.toLowerCase();
 
-        if (memberName.includes(searchInput) || memberId.includes(searchInput)) {
-            row.style.display = '';
-            found = true;
-        } else {
-            row.style.display = 'none';
-        }
-    });
+//         if (memberName.includes(searchInput) || memberId.includes(searchInput)) {
+//             row.style.display = '';
+//             found = true;
+//         } else {
+//             row.style.display = 'none';
+//         }
+//     });
 
-    if (!found) {
-        alert(`No results found for "${searchInput}".`);
-    }
-}
+//     if (!found) {
+//         alert(`No results found for "${searchInput}".`);
+//     }
+// }

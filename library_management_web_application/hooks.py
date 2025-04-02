@@ -251,3 +251,11 @@ scheduler_events = {
 
 # app_include_js = "/assets/library_management_web_application/js/books_list.js"
 
+
+
+after_request = "library_management_web_application.utils.add_global_headers"
+
+# api_routes = [
+#     {"method": "GET", "path": "/api/method/library_management_web_application.run_version_checker.version_check", "handler": "library_management_web_application.run_version_checker.version_check"}
+# ]
+

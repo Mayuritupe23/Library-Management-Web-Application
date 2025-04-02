@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to Chrome",
+            "port": 8001,
+            "request": "attach",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Debug36T",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/env/bin/python",
+            "program": "${workspaceFolder}/apps/frappe/frappe/utils/bench_helper.py",
+            "args": [
+                "frappe",
+                "serve",
+                "--port",
+                "8001",
+                "--noreload",
+                "--nothreading"
+            ],
+            "cwd": "${workspaceFolder}/sites",
+            "env": {
+                "DEV_SERVER": "1"
+            },
+            "console": "integratedTerminal"
+        }
+    ]
+}

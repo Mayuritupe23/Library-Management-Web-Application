@@ -1,9 +1,29 @@
 import frappe
 from frappe.model.document import Document
 from datetime import datetime
+from library_management_web_application.public.utils import hns_utils
+import json
+
 
 class Transactions(Document):
+    
+    my_instance=hns_utils()
+    def on_update(self):
+        
+        m_ver =self.my_instance.check_version()
+        frappe.msgprint(json.dumps(m_ver,indent=1))
+    
+    
     def validate(self):
+        
+        # m_ver = check_version()
+        # if  m_ver:
+        #     frappe.msgprint(str(m_ver))
+        
+            
+            
+            
+        
         book = frappe.get_doc("Books", self.book)
         
         if self.status == "Issued":
