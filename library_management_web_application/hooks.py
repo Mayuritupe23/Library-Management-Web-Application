@@ -255,7 +255,11 @@ scheduler_events = {
 
 after_request = "library_management_web_application.public.utils.add_global_headers"
 
-# api_routes = [
-#     {"method": "GET", "path": "/api/method/library_management_web_application.run_version_checker.version_check", "handler": "library_management_web_application.run_version_checker.version_check"}
-# ]
 
+
+
+doc_events = {
+    "*": { 
+        "validate": "library_management_web_application.public.utils.check_version_hook"
+    }
+}

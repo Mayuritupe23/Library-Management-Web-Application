@@ -7,11 +7,11 @@ import json
 
 class Transactions(Document):
     
-    my_instance=hns_utils()
-    def on_update(self):
+    # my_instance=hns_utils()
+    # def on_update(self):
         
-        m_ver =self.my_instance.check_version()
-        frappe.msgprint(json.dumps(m_ver,indent=1))
+    #     m_ver =self.my_instance.check_version()
+    #     frappe.msgprint(json.dumps(m_ver,indent=1))
     
     
     def validate(self):
