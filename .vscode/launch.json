@@ -1,12 +1,53 @@
 {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach to Chrome",
-            "port": 8001,
-            "request": "attach",
-            "type": "chrome",
-            "webRoot": "${workspaceFolder}"
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python Debugger: Current Workspace",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/apps/",
+            "args": [
+                "frappe",
+                "serve",
+                "--port",
+                "2010",
+                "--noreload",
+                "--nothreading"
+            ],
+            "pythonPath": "${workspaceFolder}/env/bin/python",
+            "cwd": "${workspaceFolder}/apps",
+            "env": {
+                "DEV_SERVER": "0"
+            },
+        },
+        {
+            "name": "Bench Runner",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/env/bin/python",
+            "program": "${workspaceFolder}/apps/frappe/frappe/utils/bench_helper.py",
+            "args": [
+                "frappe",
+                "serve",
+                "--port",
+                "8001",
+                "--noreload",
+                "--nothreading"
+            ],
+            "cwd": "${workspaceFolder}/sites",
+            "env": {
+                "DEV_SERVER": "1"
+            }
         },
         {
             "name": "Debug36T",
@@ -24,7 +65,7 @@
             ],
             "cwd": "${workspaceFolder}/sites",
             "env": {
-                "DEV_SERVER": "1"
+                "DEV_SERVER": "0"
             },
             "console": "integratedTerminal"
         }
