@@ -1,0 +1,14 @@
+body {
+    background-color: #fef6e4;
+    color: #001858;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.navbar {
+    background-color: #f582ae;
+    color: white;
+}
+
+a {
+    color: #8bd3dd;
+}

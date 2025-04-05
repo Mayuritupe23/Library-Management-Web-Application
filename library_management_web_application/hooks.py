@@ -266,3 +266,10 @@ doc_events = {
 
 
 
+# app_include_css = [
+#     "/assets/library_management_web_application/css/my_custom_theme.css"
+# ]
+
+app_include_css = "/assets/library_management_web_application/css/purple.css"
+
+app_include_js = "/assets/library_management_web_application/js/theme_toggle.js"
