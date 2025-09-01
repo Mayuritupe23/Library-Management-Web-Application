@@ -1,0 +1,122 @@
+[data-theme="libman"] {
+    --main-color: #4CAF50;
+    --primary: var(--main-color);
+    --dt-primary-color: var(--main-color);
+    --blue-avatar-bg: var(--main-color);
+    --blue-avatar-color: var(--main-color);
+    --blue: var(--main-color);
+    --heading-color: #2e7d32;
+    --text-color: #1b5e20;
+    --background-color: #e8f5e9;
+    --sidebar-bg: #c8e6c9;
+    --card-bg: #ffffff;
+    --hover-bg: #a5d6a7;
+    --border-color: #81c784;
+  }
+  
+  /* Body and Global Text */
+  [data-theme="libman"] body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  /* Navigation Bar */
+  [data-theme="libman"] .navbar,
+  [data-theme="libman"] .navbar .navbar-collapse {
+    background-color: var(--main-color);
+    color: #fff;
+  }
+  
+  [data-theme="libman"] .navbar .navbar-brand,
+  [data-theme="libman"] .navbar .nav-link,
+  [data-theme="libman"] .navbar .dropdown-toggle {
+    color: #fff !important;
+  }
+  
+  /* Primary Buttons */
+  [data-theme="libman"] .btn-primary {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color: #fff;
+  }
+  
+  [data-theme="libman"] .btn-primary:hover {
+    background-color: #388e3c;
+    border-color: #388e3c;
+  }
+  
+  /* Sidebar */
+  [data-theme="libman"] .layout-side-section {
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+  }
+  
+  [data-theme="libman"] .sidebar-item {
+    color: var(--text-color);
+  }
+  
+  [data-theme="libman"] .sidebar-item:hover {
+    background-color: var(--hover-bg);
+  }
+  
+  /* Desk Module Icons */
+  [data-theme="libman"] .module-section {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+  }
+  
+  [data-theme="libman"] .module-icon {
+    background-color: var(--main-color);
+    color: #fff;
+  }
+  
+  /* Card Headers */
+  [data-theme="libman"] .form-section .section-head,
+  [data-theme="libman"] .form-dashboard-section .section-head {
+    color: var(--heading-color);
+  }
+  
+  /* Page Headings */
+  [data-theme="libman"] .page-head,
+  [data-theme="libman"] .page-title {
+    color: var(--heading-color);
+  }
+  
+  /* Forms and Inputs */
+  [data-theme="libman"] input,
+  [data-theme="libman"] select,
+  [data-theme="libman"] textarea {
+    border: 1px solid var(--border-color);
+    background-color: #f1f8e9;
+  }
+  
+  /* Grid View / List View / Report View */
+  [data-theme="libman"] .list-row,
+  [data-theme="libman"] .list-row-container {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  [data-theme="libman"] .list-row:hover {
+    background-color: var(--hover-bg);
+  }
+  
+  /* Avatars */
+  [data-theme="libman"] .avatar-frame,
+  [data-theme="libman"] .avatar {
+    background-color: var(--blue-avatar-bg);
+    color: #fff;
+  }
+  
+  /* Modal Headers */
+  [data-theme="libman"] .modal-header {
+    background-color: var(--main-color);
+    color: #fff;
+  }
+  
+  /* Timeline / Activity */
+  [data-theme="libman"] .timeline-item .timeline-content {
+    background-color: #f1f8e9;
+    border-left: 4px solid var(--main-color);
+  }
+  

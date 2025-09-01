@@ -252,8 +252,7 @@ scheduler_events = {
 # app_include_js = "/assets/library_management_web_application/js/books_list.js"
 
 
-
-after_request = "library_management_web_application.public.utils.add_global_headers"
+# after_request = "library_management_web_application.public.utils.add_global_headers"
 
 
 
@@ -266,10 +265,44 @@ doc_events = {
 
 
 
+
+
+override_whitelisted_methods = {
+    "frappe.core.doctype.user.user.switch_theme": "library_management_web_application.overrides.switch_theme.switch_theme"
+}
+
+
+# Custom CSS and JS
 # app_include_css = [
-#     "/assets/library_management_web_application/css/my_custom_theme.css"
+# 	"/assets/library_management_web_application/css/fonts.css",
+#     "/assets/library_management_web_application/css/bootstrap.min.css",
+#     "/assets/library_management_web_application/css/icons.min.css",
+#     "/assets/library_management_web_application/css/metrica.css"
 # ]
 
-app_include_css = "/assets/library_management_web_application/css/purple.css"
+# app_include_js = [
+#     "/assets/library_management_web_application/js/bootstrap.bundle.min.js",
+#     "/assets/library_management_web_application/js/metrica.js",
+# 	"/assets/library_management_web_application/js/ui/theme.js"
 
-app_include_js = "/assets/library_management_web_application/js/theme_toggle.js"
+
+# ]
+
+app_include_css = [
+	"/assets/library_management_web_application/ERP_Theme/css/theme.css",
+    # "/assets/library_management_web_application/ERP_Theme/css/app.css",
+]
+
+app_include_js = [
+	"/assets/library_management_web_application/ERP_Theme/js/ui/theme.js",
+]
+
+
+report = [
+    {
+        "doctype": "Report",
+        "name": "Transactions DynaRep",
+        "is_standard": 1,
+        "module": "Library Management Web Application"
+    }
+]

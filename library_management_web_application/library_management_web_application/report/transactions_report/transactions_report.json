@@ -1,0 +1,12 @@
+{
+    "name": "Transactions Report",
+    "module": "Library Management Web Application",
+    "label": "Transactions Report",
+    "doctype": "Report",
+    "is_standard": "Yes",
+    "report_type": "Script Report",
+    "ref_doctype": "Transactions",
+    "add_total_row": 1,
+    "disabled": 0,
+    "prepared_report": 0
+}

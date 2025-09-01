@@ -54,12 +54,13 @@ async function handleSaveEdit(button) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `token 16cf5940b269f4e:77cb31877482f2a`
+                'Authorization': `token c7d32419639351c:9af332feb3f66cf`
             },
             body: JSON.stringify(data)
         });
 
         const result = await response.json();
+        console.log(result,"Result")
         if (result.data) {
             alert(`${doctype} updated successfully!`);
             location.reload();
@@ -105,7 +106,7 @@ async function handleDeleteRow(button) {
             const response = await fetch(`/api/v2/document/${doctype}/${name}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `token 16cf5940b269f4e:77cb31877482f2a`
+                    'Authorization': `token c7d32419639351c:9af332feb3f66cf`
                 }
             });
 
@@ -208,7 +209,7 @@ async function markReturn(btn, transactionId) {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `token 16cf5940b269f4e:77cb31877482f2a`, 
+                "Authorization": `token c7d32419639351c:9af332feb3f66cf`, 
             },
             body: JSON.stringify({
                 status: "Returned", 
@@ -325,7 +326,7 @@ async function createBookInDoctype(bookData) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": `token 16cf5940b269f4e:77cb31877482f2a`,
+                "Authorization": `token c7d32419639351c:9af332feb3f66cf`,
             },
             body: JSON.stringify(bookData)
         });
