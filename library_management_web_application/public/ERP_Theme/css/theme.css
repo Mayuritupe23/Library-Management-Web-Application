@@ -362,9 +362,20 @@
 /* --- C. Styling Form Tabs --- */
 [data-theme=erpnext_professional] .form-tabs-list {
     /* This adds the grey line at the very bottom of the tab container. */
-    border-bottom: 1px solid var(--border-color, #e50808) !important;
+    border-bottom: 1px solid var(--border-color) !important;
     margin-bottom: 10px !important; /* Creates space below the tabs */
 }
+
+/* [data-theme=erpnext_professional] .form-tabs-list .form-tabs .nav-item .nav-link.active {
+    font-weight: 600;
+    border-bottom: 2px solid #E53E3E !important; /* ही लाइन बदला */
+    /* color: var(--text-color); /* जर टेक्स्टचा रंग बदलायचा नसेल तर हा ठेवू शकता */
+    /* padding-bottom: 9px; आवश्यकतेनुसार ऍडजस्ट करा */
+/* } */ */ */
+
+
+
+
 
 /* This styles the individual tab links (Details, Payments, etc.) */
 [data-theme=erpnext_professional] .form-tabs-list .nav-item {
@@ -392,7 +403,8 @@
 [data-theme=erpnext_professional] .form-control:focus {
     background-color: #FFFFFF !important;
     border: 1px solid #1bc4f7 !important; /* Your theme's primary blue color */
-    box-shadow: none !important;
+    /* box-shadow: none !important; */
+    box-shadow: 0 0 10px rgba(81, 198, 234, 0.6) !important;
 }
 
 
@@ -431,15 +443,6 @@
     background-color: transparent !important;
 }
 
-/* --- 2. General Menu Item Styling (Default State) --- */
-/* This targets the <a> tag which is the main link container */
-/* [data-theme=erpnext_professional] .standard-sidebar-item a.item-anchor {
-    /* padding: 12px 20px 12px 24px !important; */
-    /* margin: 0 !important; */
-    /* border-radius: 100 !important; */
-    /* border-left: 4px solid transparent !important;
-    transition: all 1.2s ease-in-out; */
-/* } */ */
 
 /* This is the CORRECT selector for the text and icon wrapper */
 [data-theme=erpnext_professional] .sidebar-item-label {
@@ -455,13 +458,31 @@
     background-color: #faf8f8 !important; /* Light grey background on the link */
     
 }
-[data-theme=erpnext_professional] .standard-sidebar-item:not(.active):hover .sidebar-item-label {
-    color: var(--primary-color) !important; /* Text becomes blue */
-}
-[data-theme=erpnext_professional] .standard-sidebar-item:not(.active):hover .sidebar-item-label .item-icon {
-    color: var(--primary-color) !important; /* Icon also becomes blue */
+
+/* --- Hover Effect for INACTIVE items (Light Blue background, Blue Text/Icon, like Lazy Ledgers) --- */
+/* Target the item-anchor for hover effect */
+[data-theme=erpnext_professional] .standard-sidebar-item:not(.active):hover .item-anchor {
+    background-color: #e7f3ff !important; /* Light blue background on hover */
+    /* border-left: 4px solid #51c6ea !important; /*Blue border on hover */
 }
 
+/* Hover text color for INACTIVE items */
+[data-theme=erpnext_professional] .standard-sidebar-item:not(.active):hover .sidebar-item-label {
+    color: #51c6ea !important; /* Blue text on hover */
+}
+
+/* Hover icon stroke/fill color for INACTIVE items */
+[data-theme=erpnext_professional] .standard-sidebar-item:not(.active):hover .sidebar-item-icon svg {
+    stroke: #51c6ea !important; /* Blue icon stroke on hover */
+    fill: none !important;
+}
+
+
+
+[data-theme=erpnext_professional] .standard-sidebar-item.active-sidebar {
+    border: 2px solid var(--primary-color) !important; 
+    box-shadow: 0 0 10px rgba(81, 198, 234, 0.6) !important;
+}
 
 
 
